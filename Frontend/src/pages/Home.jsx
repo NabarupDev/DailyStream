@@ -20,12 +20,20 @@ const Home = () => {
   const navigate = useNavigate();
   
   useEffect(() => {
-    fetch('/api/wake')
+    // Get the API base URL from environment or use the relative path for proxy
+    const getApiBaseUrl = () => {
+      return import.meta.env.DEV ? '/api' : 
+        (import.meta.env.VITE_API_URL ? `${import.meta.env.VITE_API_URL}/api` : '/api');
+    };
+    
+    const apiUrl = `${getApiBaseUrl()}/wake`;
+      
+    fetch(apiUrl)
       .then(response => {
-        //console.log('API wake request sent');
+        // Wake request sent
       })
       .catch(error => {
-        //console.log('API wake request failed, but continuing anyway');
+        // Continue anyway
       });
   }, []); // Empty dependency array ensures this runs only once
   

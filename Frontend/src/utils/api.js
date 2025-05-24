@@ -20,6 +20,17 @@ const isCacheValid = (cachedData) => {
 };
 
 /**
+ * Get the API base URL from environment or use the relative path for proxy
+ * @returns {string} API base URL
+ */
+const getApiBaseUrl = () => {
+  // During development, use relative path which will be handled by Vite's proxy
+  // In production, respect the explicitly provided API URL
+  return import.meta.env.DEV ? BASE_URL : 
+    (import.meta.env.VITE_API_URL ? `${import.meta.env.VITE_API_URL}/api` : BASE_URL);
+};
+
+/**
  * Fetch top headlines by category
  * @param {string} category - News category (general, business, sports, etc.)
  * @param {number} page - Page number to fetch
@@ -33,11 +44,11 @@ export const fetchTopHeadlines = async (category = "general", page = 1, pageSize
     const cachedData = page === 1 ? JSON.parse(localStorage.getItem(cacheKey)) : null;
     
     if (cachedData && isCacheValid(cachedData)) {
-      //console.log(`Using cached data for ${category} news`);
       return cachedData.data;
     }
     
-    const url = `${BASE_URL}/news?category=${category}&page=${page}&pageSize=${pageSize}`;
+    const apiBaseUrl = getApiBaseUrl();
+    const url = `${apiBaseUrl}/news?category=${category}&page=${page}&pageSize=${pageSize}`;
     const response = await fetch(url);
     
     if (!response.ok) {
@@ -59,7 +70,6 @@ export const fetchTopHeadlines = async (category = "general", page = 1, pageSize
     
     return data.data;
   } catch (error) {
-    //console.error("Error fetching news:", error);
     throw error;
   }
 };
@@ -78,19 +88,16 @@ export const searchNews = async (query, page = 1, pageSize = 10) => {
     const cachedData = page === 1 ? JSON.parse(localStorage.getItem(cacheKey)) : null;
     
     if (cachedData && isCacheValid(cachedData)) {
-      //console.log(`Using cached search results for "${query}"`);
       return cachedData.data;
     }
     
     // If no valid cache, fetch from API
-    const url = `${BASE_URL}/news/search?q=${encodeURIComponent(query)}&page=${page}&pageSize=${pageSize}`;
-    
-    //console.log(`Searching news with URL: ${url}`);
+    const apiBaseUrl = getApiBaseUrl();
+    const url = `${apiBaseUrl}/news/search?q=${encodeURIComponent(query)}&page=${page}&pageSize=${pageSize}`;
     
     const response = await fetch(url);
     
     if (!response.ok) {
-      //console.error(`API error: ${response.status} - ${response.statusText}`);
       return {
         status: "ok",
         totalResults: 0,
@@ -101,7 +108,6 @@ export const searchNews = async (query, page = 1, pageSize = 10) => {
     const data = await response.json();
     
     if (!data.success) {
-      //console.warn('API returned unsuccessful response');
       return {
         status: "ok",
         totalResults: 0,
@@ -118,7 +124,6 @@ export const searchNews = async (query, page = 1, pageSize = 10) => {
     
     return data.data;
   } catch (error) {
-    //console.error("Error searching news:", error);
     return {
       status: "ok",
       totalResults: 0,

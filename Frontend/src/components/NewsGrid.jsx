@@ -62,7 +62,7 @@ const NewsGrid = ({ category = "general" }) => {
           setHasMore(data.articles?.length === 10); 
         }
       } catch (err) {
-        console.error("Error loading more articles:", err);
+        //console.error("Error loading more articles:", err);
       } finally {
         setLoadingMore(false);
       }
