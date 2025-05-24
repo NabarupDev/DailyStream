@@ -16,6 +16,19 @@ export default defineConfig(({ mode }) => {
         '/api': {
           target: apiUrl,
           changeOrigin: true,
+          secure: false,
+          rewrite: path => path.replace(/^\/api/, '/api'),
+        }
+      }
+    },
+    preview: {
+      port: 4173,
+      strictPort: true,
+      proxy: {
+        '/api': {
+          target: apiUrl,
+          changeOrigin: true,
+          secure: false,
           rewrite: path => path.replace(/^\/api/, '/api'),
         }
       }
