@@ -1,0 +1,151 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Dependency directories
+node_modules/
+bower_components/
+
+# Build output
+dist/
+dist-ssr/
+build/
+out/
+coverage/
+.next/
+.nuxt/
+.svelte-kit/
+.storybook/
+.cypress/
+public/build/
+public/dist/
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Local config files
+*.local
+*.env.local
+*.env.development.local
+*.env.test.local
+*.env.production.local
+
+# Editor directories and files
+.vscode/
+!.vscode/extensions.json
+.idea/
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+*.code-workspace
+
+# OS generated files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msm
+*.msp
+*.lnk
+
+# MacOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Linux
+*~
+
+# Test output
+junit.xml
+test-results/
+
+# Misc
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Optional npm cache directory
+.npm/
+
+# Optional eslint cache
+.eslintcache
+
+# Optional stylelint cache
+.stylelintcache
+
+# Optional REPL history
+.node_repl_history
+
+# VSCode settings
+.vscode/
+.history/
+
+# JetBrains IDEs
+.idea/
+*.iml
+
+# Parcel-bundler cache
+.cache/
+
+# SvelteKit
+.svelte-kit/
+
+# Next.js
+.next/
+
+# Nuxt.js
+.nuxt/
+
+# Storybook
+.storybook-out/
+
+# Cypress
+cypress/videos/
+cypress/screenshots/
+
+# Playwright
+test-results/
+playwright-report/
+
+# Miscellaneous
+*.tgz
+*.zip
+*.tar
+*.gz
+*.rar
+*.7z
+
+# Firebase
+.firebase/
+
+# Local serverless emulators
+.local/
+
+# Prettier
+.prettierignore
+
+# Snapshots
+__snapshots__/
+*.snap
+
+# VSCode settings
+.vscode/
+.history/
