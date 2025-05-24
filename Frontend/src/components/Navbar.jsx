@@ -16,7 +16,6 @@ const Navbar = ({ onCategorySelect }) => {
     { name: "Science", path: "/category/science" }
   ];
 
-  // Improved category handling with error catching
   const handleCategoryClick = (e, path) => {
     e.preventDefault();
     try {
@@ -24,18 +23,15 @@ const Navbar = ({ onCategorySelect }) => {
       if (onCategorySelect && typeof onCategorySelect === 'function') {
         onCategorySelect(category);
       } else {
-        // Fallback if no onCategorySelect is provided
         navigate(path);
       }
     } catch (error) {
-      console.error("Error handling category click:", error);
-      // Fallback to direct navigation
+      //console.error("Error handling category click:", error);
       navigate(path);
     }
     setIsOpen(false);
   };
 
-  // Check if a path is active
   const isActive = (path) => {
     return location.pathname === path;
   };

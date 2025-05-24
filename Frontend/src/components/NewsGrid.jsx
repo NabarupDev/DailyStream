@@ -25,9 +25,7 @@ const NewsGrid = ({ category = "general" }) => {
     if (node) observer.current.observe(node);
   }, [loading, loadingMore, hasMore]);
 
-  // Initial data fetch
   useEffect(() => {
-    // Reset states when category changes
     setArticles([]);
     setPage(1);
     setHasMore(true);
@@ -37,11 +35,11 @@ const NewsGrid = ({ category = "general" }) => {
       try {
         const data = await fetchTopHeadlines(category, 1);
         setArticles(data.articles || []);
-        setHasMore(data.articles?.length === 10); // Assuming pageSize is 10
+        setHasMore(data.articles?.length === 10); 
         setError(null);
       } catch (err) {
         setError('Failed to fetch news articles. Please try again later.');
-        console.error(err);
+        //console.error(err);
       } finally {
         setLoading(false);
       }
@@ -50,9 +48,8 @@ const NewsGrid = ({ category = "general" }) => {
     fetchNews();
   }, [category]);
 
-  // Load more data when page changes
   useEffect(() => {
-    if (page === 1) return; // Skip for initial load
+    if (page === 1) return; 
     
     const fetchMoreNews = async () => {
       setLoadingMore(true);
@@ -62,11 +59,10 @@ const NewsGrid = ({ category = "general" }) => {
           setHasMore(false);
         } else {
           setArticles(prev => [...prev, ...data.articles]);
-          setHasMore(data.articles?.length === 10); // Assuming pageSize is 10
+          setHasMore(data.articles?.length === 10); 
         }
       } catch (err) {
         console.error("Error loading more articles:", err);
-        // Don't set error state for pagination issues to preserve existing articles
       } finally {
         setLoadingMore(false);
       }

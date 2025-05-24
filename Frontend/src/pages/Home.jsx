@@ -19,6 +19,16 @@ const Home = () => {
   
   const navigate = useNavigate();
   
+  useEffect(() => {
+    fetch('/api/wake')
+      .then(response => {
+        //console.log('API wake request sent');
+      })
+      .catch(error => {
+        //console.log('API wake request failed, but continuing anyway');
+      });
+  }, []); // Empty dependency array ensures this runs only once
+  
   const observer = useRef();
   const lastSearchResultRef = useCallback(node => {
     if (isSearching || loadingMoreResults) return;
@@ -42,7 +52,7 @@ const Home = () => {
     
     setIsSearching(true);
     setSearchError(null);
-    setSearchPage(1); // Reset page to 1 when starting a new search
+    setSearchPage(1);
     
     try {
       const results = await searchNews(searchQuery, 1);
@@ -50,16 +60,15 @@ const Home = () => {
         articles: results.articles || [],
         totalResults: results.totalResults || 0
       });
-      setHasMoreResults((results.articles?.length || 0) === 10); // Assuming pageSize is 10
+      setHasMoreResults((results.articles?.length || 0) === 10);
     } catch (error) {
-      console.error("Search failed:", error);
+      //console.error("Search failed:", error);
       setSearchError("An error occurred while searching. Please try again later.");
     } finally {
       setIsSearching(false);
     }
   };
 
-  // Effect for loading more search results when page changes
   useEffect(() => {
     if (searchPage === 1 || !searchResults) return;
     
@@ -79,8 +88,7 @@ const Home = () => {
           setHasMoreResults(moreResults.articles.length === 10);
         }
       } catch (error) {
-        console.error("Failed to load more search results:", error);
-        // Don't set error state for pagination issues
+        //console.error("Failed to load more search results:", error);
       } finally {
         setLoadingMoreResults(false);
       }
@@ -97,7 +105,6 @@ const Home = () => {
     navigate(`/category/${category}`);
   };
   
-  // Helper function to check if search results exist and have articles
   const hasSearchResults = () => {
     return searchResults && 
            searchResults.articles && 
@@ -105,7 +112,6 @@ const Home = () => {
            searchResults.articles.length > 0;
   };
 
-  // Helper function to render search results or empty state
   const renderSearchResults = () => {
     if (searchError) {
       return (
@@ -278,7 +284,6 @@ const Home = () => {
               </form>
             </div>
 
-            {/* Featured News Tags */}
             <div className="mb-8">
               <h2 className="text-xl font-semibold text-gray-800 mb-3">Trending Topics</h2>
               <div className="flex flex-wrap gap-2">

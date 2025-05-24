@@ -16,7 +16,9 @@ app.use('/api/news', newsRoutes);
 app.get('/', (req, res) => {
   res.send('NewsAPI Service is running');
 });
-
+app.get('/api/wake', (req, res) => {
+  res.status(200).json({ status: 'Server is awake' });
+});
 // Start the server
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

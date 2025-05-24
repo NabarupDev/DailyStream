@@ -1,6 +1,3 @@
-// News API utility functions
-
-// Base URL for our API requests (will be proxied by Vite)
 const BASE_URL = "/api";
 
 // Cache configuration
@@ -35,13 +32,11 @@ export const fetchTopHeadlines = async (category = "general", page = 1, pageSize
     const cacheKey = `${CACHE_KEYS.TOP_HEADLINES}${category}`;
     const cachedData = page === 1 ? JSON.parse(localStorage.getItem(cacheKey)) : null;
     
-    // If cache is valid, return cached data
     if (cachedData && isCacheValid(cachedData)) {
-      console.log(`Using cached data for ${category} news`);
+      //console.log(`Using cached data for ${category} news`);
       return cachedData.data;
     }
     
-    // If no valid cache, fetch from API
     const url = `${BASE_URL}/news?category=${category}&page=${page}&pageSize=${pageSize}`;
     const response = await fetch(url);
     
@@ -55,7 +50,6 @@ export const fetchTopHeadlines = async (category = "general", page = 1, pageSize
       throw new Error('API returned unsuccessful response');
     }
     
-    // Store in cache with timestamp (only the first page)
     if (page === 1) {
       localStorage.setItem(cacheKey, JSON.stringify({
         timestamp: new Date().getTime(),
@@ -65,7 +59,7 @@ export const fetchTopHeadlines = async (category = "general", page = 1, pageSize
     
     return data.data;
   } catch (error) {
-    console.error("Error fetching news:", error);
+    //console.error("Error fetching news:", error);
     throw error;
   }
 };
@@ -83,21 +77,20 @@ export const searchNews = async (query, page = 1, pageSize = 10) => {
     const cacheKey = `${CACHE_KEYS.SEARCH}${query}`;
     const cachedData = page === 1 ? JSON.parse(localStorage.getItem(cacheKey)) : null;
     
-    // If cache is valid, return cached data
     if (cachedData && isCacheValid(cachedData)) {
-      console.log(`Using cached search results for "${query}"`);
+      //console.log(`Using cached search results for "${query}"`);
       return cachedData.data;
     }
     
     // If no valid cache, fetch from API
     const url = `${BASE_URL}/news/search?q=${encodeURIComponent(query)}&page=${page}&pageSize=${pageSize}`;
     
-    console.log(`Searching news with URL: ${url}`);
+    //console.log(`Searching news with URL: ${url}`);
     
     const response = await fetch(url);
     
     if (!response.ok) {
-      console.error(`API error: ${response.status} - ${response.statusText}`);
+      //console.error(`API error: ${response.status} - ${response.statusText}`);
       return {
         status: "ok",
         totalResults: 0,
@@ -108,7 +101,7 @@ export const searchNews = async (query, page = 1, pageSize = 10) => {
     const data = await response.json();
     
     if (!data.success) {
-      console.warn('API returned unsuccessful response');
+      //console.warn('API returned unsuccessful response');
       return {
         status: "ok",
         totalResults: 0,
@@ -116,7 +109,6 @@ export const searchNews = async (query, page = 1, pageSize = 10) => {
       };
     }
     
-    // Store in cache with timestamp (only the first page)
     if (page === 1) {
       localStorage.setItem(cacheKey, JSON.stringify({
         timestamp: new Date().getTime(),
@@ -126,7 +118,7 @@ export const searchNews = async (query, page = 1, pageSize = 10) => {
     
     return data.data;
   } catch (error) {
-    console.error("Error searching news:", error);
+    //console.error("Error searching news:", error);
     return {
       status: "ok",
       totalResults: 0,

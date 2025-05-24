@@ -2,13 +2,11 @@ import React, { useState } from 'react';
 import LazyImage from './LazyImage';
 
 const NewsCard = ({ article }) => {
-  // Format the published date
   const formatDate = (dateString) => {
     const options = { year: 'numeric', month: 'long', day: 'numeric' };
     return new Date(dateString).toLocaleDateString(undefined, options);
   };
 
-  // Data URL for a simple gray placeholder image with text
   const fallbackImage = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='200' viewBox='0 0 300 200'%3E%3Crect width='300' height='200' fill='%23e2e8f0'/%3E%3Ctext x='50%25' y='50%25' font-family='Arial' font-size='16' fill='%2364748b' text-anchor='middle' dominant-baseline='middle'%3EDailyStream%3C/text%3E%3C/svg%3E";
 
   return (

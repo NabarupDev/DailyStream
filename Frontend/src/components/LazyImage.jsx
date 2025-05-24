@@ -10,7 +10,7 @@ const LazyImage = ({ src, alt, className, placeholderSrc, onLoad, onError }) => 
   const defaultPlaceholder = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='200' viewBox='0 0 300 200'%3E%3Crect width='300' height='200' fill='%23e2e8f0'/%3E%3Ctext x='50%25' y='50%25' font-family='Arial' font-size='16' fill='%2364748b' text-anchor='middle' dominant-baseline='middle'%3EDailyStream%3C/text%3E%3C/svg%3E";
 
   useEffect(() => {
-    setHasError(false); // Reset error state if src changes
+    setHasError(false);
   }, [src]);
 
   useEffect(() => {
@@ -44,13 +44,11 @@ const LazyImage = ({ src, alt, className, placeholderSrc, onLoad, onError }) => 
 
   return (
     <div ref={imgRef} className="relative w-full h-full">
-      {/* Show placeholder while image is loading */}
       <div 
         className={`absolute inset-0 bg-gray-200 ${isLoaded ? 'opacity-0' : 'opacity-100'} transition-opacity duration-300`} 
         aria-hidden="true"
       />
       
-      {/* Only load the actual image when in view and no error */}
       {isInView && !hasError && (
         <img
           src={src || placeholderSrc || defaultPlaceholder}
@@ -61,7 +59,6 @@ const LazyImage = ({ src, alt, className, placeholderSrc, onLoad, onError }) => 
         />
       )}
 
-      {/* Show placeholder if not in view or if error */}
       {(!isInView || hasError) && (
         <img
           src={placeholderSrc || defaultPlaceholder}
